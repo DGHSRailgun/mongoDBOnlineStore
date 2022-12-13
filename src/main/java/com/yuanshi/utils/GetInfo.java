@@ -43,4 +43,15 @@ public class GetInfo {
         System.out.println("carrier_contacts: "+ document.get("carrier_contacts"));
     }
 
+    public static void getSupplierInfo(Document document) {
+        System.out.println("supplier_id: "+ document.get("supplier_id"));
+        System.out.println("supplier_name: "+ document.get("supplier_name"));
+        System.out.println("supplier_contacts: "+ document.get("supplier_contacts"));
+    }
+
+    public static void getCategoryInfo(Document document) {
+        System.out.println("category_id: "+ document.get("category_id"));
+        System.out.println("category_description: "+ document.get("category_description"));
+    }
+
 }

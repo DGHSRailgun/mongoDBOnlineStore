@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46852aec-cd63-4638-be21-5e980ce4ecd8" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/App/OnlineStore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/Printer/Printer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/utils/GetInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/Entity/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yuanshi/Config/MongoDBConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/Config/MongoDBConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yuanshi/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yuanshi/App/OnlineStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/App/OnlineStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yuanshi/Printer/Printer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/Printer/Printer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yuanshi/utils/GetInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuanshi/utils/GetInfo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,14 +48,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.yuanshi.Main" />
@@ -91,7 +88,8 @@
       <workItem from="1667498803661" duration="2264000" />
       <workItem from="1667620314355" duration="825000" />
       <workItem from="1670880919862" duration="2176000" />
-      <workItem from="1670940594130" duration="7923000" />
+      <workItem from="1670940594130" duration="8097000" />
+      <workItem from="1670965426867" duration="9878000" />
     </task>
     <task id="LOCAL-00001" summary="import dependencies">
       <created>1667503847472</created>
@@ -114,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670883112466</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Finished part of queries">
+      <created>1670948828014</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1670948828014</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,6 +140,7 @@
     <MESSAGE value="import dependencies" />
     <MESSAGE value="formalized dependencies" />
     <MESSAGE value="MongoDB connection config" />
-    <option name="LAST_COMMIT_MESSAGE" value="MongoDB connection config" />
+    <MESSAGE value="Finished part of queries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished part of queries" />
   </component>
 </project>
