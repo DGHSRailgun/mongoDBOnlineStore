@@ -1,7 +1,12 @@
 package com.yuanshi;
 
+import com.yuanshi.App.OnlineStore;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("What's up!");
+        OnlineStore os = new OnlineStore();
+
+        os.buildConnection();
+        os.executeInstructions();
     }
 }

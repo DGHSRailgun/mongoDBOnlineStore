@@ -1,43 +1,70 @@
 package com.yuanshi.Config;
 
 import com.mongodb.MongoClient;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.yuanshi.Exception.ClientNotFoundException;
 import com.yuanshi.Exception.DatabaseNotFoundException;
-import lombok.Data;
 
 
-import java.util.List;
 import java.util.Objects;
 
-@Data
 public class MongoDBConfig{
-    private MongoClient client;
-    private MongoDatabase database;
+    private MongoClient client = null;
+    private MongoDatabase database = null;
+
+
+    public MongoClient getClient() {
+        return client;
+    }
+
+    public MongoDatabase getDatabase() {
+        return database;
+    }
 
     public void createMongoConnection(String myClient, String myDatabase){
 
         try {
             client = new MongoClient(myClient);
 
-            if (!Objects.equals(client, new MongoClient())) {
+            if (client.toString().equals("")) {
                 throw new ClientNotFoundException();
             }
 
             database = client.getDatabase(myDatabase);
 
-
-            if (!Objects.equals(database, client.getDatabase(myDatabase))) {
+            if (database.toString().equals("")) {
                 throw new DatabaseNotFoundException();
             }
 
-        }catch (DatabaseNotFoundException | ClientNotFoundException e){
+        }catch (RuntimeException e) {
             e.printStackTrace();
+        } catch (ClientNotFoundException | DatabaseNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
 
-    
+    public MongoCollection getCollection(String collection) {
+        return database.getCollection(collection);
+    }
+
+    public void closeMongoConnection(String myClient) {
+
+        try {
+            client = new MongoClient(myClient);
+
+            if (!Objects.equals(client, new MongoClient(myClient))) {
+                throw new ClientNotFoundException();
+            }
+
+            client.close();
+
+        }catch (ClientNotFoundException e){
+            e.printStackTrace();
+        }
+
+    }
 
 }
