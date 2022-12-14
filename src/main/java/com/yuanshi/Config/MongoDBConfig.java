@@ -15,14 +15,6 @@ public class MongoDBConfig{
     private MongoDatabase database = null;
 
 
-    public MongoClient getClient() {
-        return client;
-    }
-
-    public MongoDatabase getDatabase() {
-        return database;
-    }
-
     public void createMongoConnection(String myClient, String myDatabase){
 
         try {

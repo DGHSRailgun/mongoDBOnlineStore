@@ -1,9 +1,11 @@
 package com.yuanshi.App;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.WriteResult;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.UpdateResult;
 import com.yuanshi.Config.MongoDBConfig;
 import com.yuanshi.Printer.Printer;
 import com.yuanshi.utils.GetInfo;
@@ -440,12 +442,80 @@ public class OnlineStore implements Serializable {
             /* Operation 9 */
             if (Objects.equals(command, "9")) {
 
+                /* Enter order ID */
+                Printer.printEnterOrderID();
+                Integer orderID = Integer.parseInt(sc.next());
+                sc.nextLine();
+                BasicDBObject item = new BasicDBObject("id", orderID);
+
+                /* Get collections */
+                MongoCollection collectionItems = mongoDBConfig.getCollection("item_product_orders");
+                MongoCollection collectionOrders = mongoDBConfig.getCollection("orders_customer_payment_delivery_carrier");
+
+                /* Check whether the order id exists and updates(findOneAndUpdate) */
+                Map<String, Object> paymentMap = new LinkedHashMap<>();
+
+                Printer.printPaymentID(); //Enter payment id
+                Integer payment_id = Integer.parseInt(sc.next());
+                sc.nextLine();
+                paymentMap.put("payment_id", payment_id);
+
+                Printer.printPaymentDate(); //Enter payment date
+                String paymentDate = sc.nextLine();
+                paymentMap.put("paymentDate", paymentDate);
+
+                Document oldOrder = (Document) collectionOrders.findOneAndUpdate(item, new Document("$set", new Document(paymentMap)));
+
+                if (Objects.equals(oldOrder, null) ) {//No such order
+                    Printer.printOrderIDNotExist();
+                    continue;
+                }else {//The order exists and updated successfully (continue to update items)
+                    UpdateResult ur = collectionItems.updateMany(new BasicDBObject("orders_id", orderID), new Document("$set",new Document(paymentMap)));
+                    Printer.printPaymentSucceed(ur);
+                }
             }
-            
+
+            /* Operation 10 */
+            if (Objects.equals(command, "10")) {
+
+                /* Enter order ID */
+                Printer.printEnterOrderID();
+                Integer orderID = Integer.parseInt(sc.next());
+                sc.nextLine();
+                BasicDBObject item = new BasicDBObject("id", orderID);
+
+                /* Get collections */
+                MongoCollection collectionItems = mongoDBConfig.getCollection("item_product_orders");
+                MongoCollection collectionOrders = mongoDBConfig.getCollection("orders_customer_payment_delivery_carrier");
+
+                /* Check whether the order id exists and updates(findOneAndUpdate) */
+                Map<String, Object> carrierMap = new LinkedHashMap<>();
+
+                Printer.printCarrierID(); //Enter carrier id
+                Integer carrier_id = Integer.parseInt(sc.next());
+                sc.nextLine();
+                carrierMap.put("carrier_id", carrier_id);
+
+                Printer.printCarrierName(); //Enter carrier name
+                String carrier_name = sc.nextLine();
+                carrierMap.put("carrier_name", carrier_name);
+
+                Printer.printCarrierContacts(); //Enter carrier contacts
+                String carrier_contacts = sc.nextLine();
+                carrierMap.put("carrier_contacts", carrier_contacts);
+
+                Document oldOrder = (Document) collectionOrders.findOneAndUpdate(item, new Document("$set", new Document(carrierMap)));
+
+                if (Objects.equals(oldOrder, null) ) {//No such order
+                    Printer.printOrderIDNotExist();
+                    continue;
+                }else {//The order exists and updated successfully (continue to update items)
+                    UpdateResult ur = collectionItems.updateMany(new BasicDBObject("orders_id", orderID), new Document("$set",new Document(carrierMap)));
+                    Printer.printShipmentSucceed(ur);
+                }
 
 
-
-
+            }
 
             /* Exit operation */
             if (Objects.equals(command, "exit")) {
@@ -453,11 +523,7 @@ public class OnlineStore implements Serializable {
                 break;
             }
 
-
-
-
         }
-
 
         mongoDBConfig.closeMongoConnection("localhost:27017");
 

@@ -1,5 +1,7 @@
 package com.yuanshi.Printer;
 
+import com.mongodb.client.result.UpdateResult;
+
 import java.io.Serializable;
 
 public class Printer implements Serializable {
@@ -162,6 +164,27 @@ public class Printer implements Serializable {
         System.out.println("///////////////////////////////////////////////////////////////////////////////////////////");
     }
 
+    public static void printOrderIDNotExist() {
+        System.out.println("///////////////////////////////////////////////////////////////////////////////////////////");
+        System.out.println("The order id doesn't exists! Back to select the operation!");
+        System.out.println("///////////////////////////////////////////////////////////////////////////////////////////");
+    }
+
+    public static void printPaymentSucceed(UpdateResult ur) {
+        System.out.println("///////////////////////////////////////////////////////////////////////////////////////////");
+        System.out.println("MatchedCount" + ur.getMatchedCount());
+        System.out.println("ModifiedCount" + ur.getModifiedCount());
+        System.out.println("You have successfully made payment!");
+        System.out.println("///////////////////////////////////////////////////////////////////////////////////////////");
+    }
+
+    public static void printShipmentSucceed(UpdateResult ur) {
+        System.out.println("///////////////////////////////////////////////////////////////////////////////////////////");
+        System.out.println("MatchedCount" + ur.getMatchedCount());
+        System.out.println("ModifiedCount" + ur.getModifiedCount());
+        System.out.println("You have successfully made shipment!");
+        System.out.println("///////////////////////////////////////////////////////////////////////////////////////////");
+    }
 
     public static void endOperationInstruction() {
         System.out.println("///////////////////////////////////////////////////////////////////////////////////////////");
