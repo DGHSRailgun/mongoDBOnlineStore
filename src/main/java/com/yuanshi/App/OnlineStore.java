@@ -7,11 +7,10 @@ import com.mongodb.client.MongoCollection;
 import com.yuanshi.Config.MongoDBConfig;
 import com.yuanshi.Printer.Printer;
 import com.yuanshi.utils.GetInfo;
-import org.bson.BSONObject;
 import org.bson.Document;
 
 
-import java.io.IOException;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -235,9 +234,9 @@ public class OnlineStore implements Serializable {
                 Printer.printEnterPlaceAnOrder();
 
                 /* To record the order information */
-                Map<String, Object> ordersMap = new HashMap<>();
-                Map<String, Object> map = new HashMap<>();
-                List<Map> list = new ArrayList<>();
+                Map<String, Object> ordersMap = new LinkedHashMap<>();
+                Map<String, Object> itemsMap = new LinkedHashMap<>();
+                List<Map> itemsList = new ArrayList<>();
 
                 /* Get collections */
                 MongoCollection collectionItem = mongoDBConfig.getCollection("item_product_orders");
@@ -269,7 +268,6 @@ public class OnlineStore implements Serializable {
                     e.printStackTrace();
                 }
 
-                System.out.println(newMaxOrdersID);
 
                 /* Inserting One Order*/
 
@@ -333,6 +331,7 @@ public class OnlineStore implements Serializable {
                 } catch (RuntimeException e) {
                     e.printStackTrace();
                 }
+                Printer.printInsertOrderSuccessfully();
 
                 /* End creating (inserting new order and creating items)*/
 
@@ -363,48 +362,86 @@ public class OnlineStore implements Serializable {
                 while (true) {
 
                     /* put the new item id into map */
-                    map.put("id", newMaxItemID);
+                    itemsMap.put("id", newMaxItemID);
 
                     /* Enter quantity*/
                     Printer.printEnterQuantity();
                     Integer quantity = Integer.parseInt(sc.next());
-                    map.put("quantity", quantity);
+                    itemsMap.put("quantity", quantity);
 
                     /* Select a product */
                     Printer.printSelectProduct();
                     Integer productID = Integer.parseInt(sc.next());
-                    BasicDBObject product = new BasicDBObject("product_id", productID);
+                    sc.nextLine();
+                    BasicDBObject product = new BasicDBObject("id", productID);
 
                     /* Get the product information and put them into the map*/
                     FindIterable<Document> documents = collectionProduct.find(product);
                     for (Document document: documents) {
-                        map.put("product_id", document.get("id"));
-                        map.put("price", document.get("price"));
-                        map.put("description", document.get("description"));
-                        map.put("category_id", document.get("category_id"));
-                        map.put("category_description", document.get("category_description"));
-                        map.put("supplier_id", document.get("supplier_id"));
-                        map.put("supplier_name", document.get("supplier_name"));
-                        map.put("supplier_contacts", document.get("supplier_contacts"));
+                        itemsMap.put("product_id", document.get("id"));
+                        itemsMap.put("price", document.get("price"));
+                        itemsMap.put("description", document.get("description"));
+                        itemsMap.put("category_id", document.get("category_id"));
+                        itemsMap.put("category_description", document.get("category_description"));
+                        itemsMap.put("supplier_id", document.get("supplier_id"));
+                        itemsMap.put("supplier_name", document.get("supplier_name"));
+                        itemsMap.put("supplier_contacts", document.get("supplier_contacts"));
                     }
 
+                    /* Put the same orders information into the itemsMap */
+                    itemsMap.put("orders_id", newMaxOrdersID);
+                    itemsMap.put("totalPrice", totalPrice);
+                    itemsMap.put("date",date);
+                    itemsMap.put("saleDate", saleDate);
+                    itemsMap.put("customer_id", customer_id);
+                    itemsMap.put("customer_name", customer_name);
+                    itemsMap.put("customer_contacts", customer_contacts);
+                    itemsMap.put("payment_id", payment_id);
+                    itemsMap.put("paymentDate", paymentDate);
+                    itemsMap.put("carrier_id", carrier_id);
+                    itemsMap.put("carrier_name", carrier_name);
+                    itemsMap.put("carrier_contacts", carrier_contacts);
+                    itemsMap.put("deliveryDate", deliveryDate);
 
 
-                    /* Put item id into map*/
-                    map.put("id", newMaxItemID);
+                    /* Put the current item into a list for batch inserting later (to improve performance) */
+                    itemsList.add(new Document(itemsMap));
 
-                    /*  */
+                    /* Check whether to add new products */
+                    Printer.printWhetherToAddProduct();
+                    String continueFlag = sc.nextLine();
 
 
+                    if (Objects.equals(continueFlag, "y") || Objects.equals(continueFlag, "Y")) {
+                        Printer.printContinueToAddProduct();
+                        newMaxItemID++;
+                        itemsMap.clear();
+                        continue;
+                    }
+
+                    if (Objects.equals(continueFlag, "n") || Objects.equals(continueFlag, "N")) {
+                        /* End operation and batch insert into database */
+                        collectionItem.insertMany(itemsList);
+                        Printer.printNotToAddProduct();
+                        break;
+                    }
+
+                    if (!Objects.equals(continueFlag, "y") || !Objects.equals(continueFlag, "Y") || !Objects.equals(continueFlag, "n") || !Objects.equals(continueFlag, "N")) {
+                        /* End operation and batch insert into database */
+                        collectionItem.insertMany(itemsList);
+                        Printer.printUnknownCommand();
+                        break;
+                    }
 
                 }
 
+            }
 
-
-
-
+            /* Operation 9 */
+            if (Objects.equals(command, "9")) {
 
             }
+            
 
 
 
