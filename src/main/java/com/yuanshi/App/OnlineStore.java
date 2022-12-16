@@ -1,7 +1,6 @@
 package com.yuanshi.App;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.WriteResult;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -23,7 +22,7 @@ public class OnlineStore implements Serializable {
 
 
     public void buildConnection() {
-        mongoDBConfig.createMongoConnection("localhost:27017", "onlineStoreTest");
+        mongoDBConfig.createMongoConnection("localhost:27017", "onlinestore");
     }
 
     public void executeInstructions() {
@@ -528,9 +527,6 @@ public class OnlineStore implements Serializable {
         mongoDBConfig.closeMongoConnection("localhost:27017");
 
     }
-
-
-
 
 
 }
